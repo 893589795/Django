@@ -1,0 +1,50 @@
+.top-bg{
+    background: url("../images/detail.jpg");
+    background-size: cover;
+    height: 500px;
+}
+.ui.basic.inverted.red.segment{
+    margin: 0;
+    padding: 0;
+}
+
+.ui.mini.text.menu{
+    height: 50px;
+    margin: 0;
+}
+.face{
+    border-radius: 50%;
+}
+span{
+    color: #FFFFFF;
+}
+.ui.inverted.clear.button,
+.ui.black.button{
+    border-radius: 20px;
+}
+.ui.basic.segment.content{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+.content-text{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: solid 1px rgba(128, 128, 128, 0.15);
+}
+h1{
+    font-family: Oswald;
+    font-size: 40px;
+}
+p{
+    font-family: Raleway;
+    font-size: 20px;
+}
+.desc-span{
+    color: #bbbbbb;
+    font-size: 12px;
+}
+.ui.basic.segment.content{
+    margin-bottom: 200px;
+}

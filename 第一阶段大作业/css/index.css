@@ -1,0 +1,40 @@
+.ui.inverted.basic.segment{
+    background-color: #ff3a36;
+    padding: 0;
+    margin-bottom: 0;
+}
+.ui.text.menu.header{
+    height: 56px;
+    margin: 0;
+}
+.ui.text.menu.header>.item.logo{
+    padding-left: 18px;
+}
+.username{
+    margin-left: 5px;
+    color: white;
+}
+.ui.inverted.button.logout{
+    width: 86px;
+    height: 36px;
+    border-radius: 18px;
+    font-weight: normal;
+    padding: 0;
+}
+.ui.segment.card-view{
+    /*height: 250px;*/
+    /*width: 256px;*/
+    padding: 0;
+}
+.ui.image.back-cover{
+    margin:0;
+    width: 100%;
+    height:202px;
+    background-size: cover;
+}
+.ui.grid.container{
+    width: 820px;
+}
+.card-title{
+    margin: 10px 0 0 0;
+}

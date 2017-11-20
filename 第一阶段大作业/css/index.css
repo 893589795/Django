@@ -17,8 +17,8 @@
 .ui.inverted.button.logout{
     width: 86px;
     height: 36px;
-    border-radius: 18px;
-    font-weight: normal;
+    /*border-radius: 18px;*/
+    /*font-weight: normal;*/
     padding: 0;
 }
 .ui.segment.card-view{
@@ -37,4 +37,8 @@
 }
 .card-title{
     margin: 10px 0 0 0;
+}
+span{
+    color: rgba(169, 169, 169, 0.5);
+    font-size: 8px;
 }

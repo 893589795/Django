@@ -18,10 +18,10 @@
     width: 86px;
     height: 36px;
     /*border-radius: 18px;*/
-    /*font-weight: normal;*/
+    font-weight: normal;
     padding: 0;
 }
-.ui.segment.card-view{
+.ui.basic.segment.card-view{
     /*height: 250px;*/
     /*width: 256px;*/
     padding: 0;
@@ -36,9 +36,16 @@
     width: 820px;
 }
 .card-title{
-    margin: 10px 0 0 0;
+  line-height: 19px;
+  font-size: 19px;
+  margin: 10px 0 0 0;
+}
+.ui.basic.segment.descr{
+  text-algin:left;
+  padding: 0;
+  margin: 10px 0 0 0;
 }
 span{
-    color: rgba(169, 169, 169, 0.5);
+    color: rgba(169, 169, 169, 0.7);
     font-size: 8px;
 }

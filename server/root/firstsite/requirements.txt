@@ -1,0 +1,5 @@
+bootstrap-admin==0.3.7.1
+Django==1.8.18
+django-admin-bootstrapped==2.5.7
+pyflakes==1.6.0
+pytz==2017.3

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load  staticfiles %}
+<html>
+<head>
+	<title>day01</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/semantic.css' %}">
+</head>
+<body>
+    <div class="ui very padded container vertical segment" style="border-bottom: 0">
+        <h1 class="ui header" style="margin-bottom: 10px">
+            {{ artical.headline }}
+        </h1>
+        <div style="margin-bottom: 30px">
+            <i class="icon grey small unhide"></i>
+            <span>{{ artical.views }}</span>
+            <i class="icon grey heart" style="margin-left: 10px"></i>
+            <span>{{ artical.favs }}</span>
+            <span style="margin-left: 20px">{{ artical.createtime }}</span>
+        </div>
+        <div class="ui image">
+                <img src="{{ artical.img }}" alt="">
+            </div>
+        <p style="font-size: 20px;margin-top: 30px">
+            {{ artical.content }}
+        </p>
+        <div class="ui mini tag label" >
+            {{ artical.tag }}
+        </div>
+    </div>
+    <div class="ui basic very padded borderless container segment">
+        <div class="ui minimal comments">
+          <h3 class="ui dividing header">评论</h3>
+
+          <div class="comment">
+            <a class="avatar">
+              <img src="/images/avatar/small/matt.jpg">
+            </a>
+            <div class="content">
+              <a class="author">Matt</a>
+              <div class="metadata">
+                <span class="date">今天下午 5:42</span>
+              </div>
+              <div class="text">太赞了！ </div>
+              <div class="actions">
+                <a class="reply">Reply</a>
+              </div>
+            </div>
+          </div>
+
+          <form class="ui reply form">
+            <div class="field">
+              <textarea></textarea>
+            </div>
+            <div class="ui blue labeled submit icon button"><i class="icon edit"></i> Add Reply </div>
+          </form>
+        </div>
+    </div>
+</body>
+</html>

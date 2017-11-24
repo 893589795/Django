@@ -1,0 +1,28 @@
+.ui.basic.segment.head{
+    padding: 0;
+    height: 300px;
+}
+.ui.basic.center.aligned.segment{
+    top: 50px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+.banner-image{
+    height: 300px;
+    width: 100%;
+}
+.ui.header{
+    padding-top: 60px;
+    color: #FFFFFF;
+    font-family: Raleway;
+    font-size: 50px;
+}
+.header-detail{
+    color: white;
+    font-size: 11px;
+}
+.ui.basic.segment{
+    padding: 0;
+    margin: 0;
+}

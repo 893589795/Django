@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>开局一张图，故事全靠编</title>
+        <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+        <link href="https://fonts.googleapis.com/css?family=Oswald|Raleway" rel="stylesheet">
+        <style type="text/css">
+            /*封面图部分样式如下*/
+            .ui.vertical.segment.masthead {
+            height: 300px;
+            background: url('{% static 'images/star_banner.jpg' %}');
+            background-size: cover;
+            background-position: 100% 80%;
+            }
+            .ui.center.aligned.header.blogslogon {
+                margin-top: 40px;
+            }
+            .ui.center.aligned.header.blogslogon p {
+                margin-top: 10px;
+                color: white;
+                font-size: 10px;
+            }
+            /*菜单栏部分样式如下*/
+            .ui.container.nav {
+                width: 500px;
+            }
+
+            /*菜单栏部分样式如下*/
+            .ui.container.vertical.segment {
+                width: 800px;
+            }
+
+            h2 {
+                font-family:'Oswald', sans-serif!important;
+                font-size:40px;
+            }
+
+            p {
+                font-family: 'Raleway', sans-serif;
+                font-size:18px;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 封面图部分如下 -->
+        <div class="ui inverted vertical segment masthead">
+            <h1 class="ui center aligned header blogslogon" style="font-size:50px;font-family: 'Raleway', sans-serif!important;">
+                开局一张图，故事全靠编
+                <p class="ui sub header">
+                    学习使我快乐！
+                </p>
+            </h1>
+        </div>
+        <!-- 菜单栏部分如下 -->
+        <div class="ui container nav">
+            <div class="ui borderless text three item menu ">
+                <div class="ui simple dropdown  item">
+                    分类
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" href="?tag=life">life</a>
+                        <a class="item" href="?tag=tech">tech</a>
+                    </div>
+                </div>
+                <a class="item">
+                    Popular
+                </a>
+                <a class="item">
+                    About
+                </a>
+            </div>
+        </div>
+        <div class="ui divider"></div>
+        <!-- 文章内容部分如下 -->
+        <div class="ui  vertical segment">
+            {% for artical in article_list %}
+                <div class="ui container vertical segment">
+                    <a href="/detail?id={{ artical.id }}">
+                        <h2 class="ui header" style="margin-bottom: 10px">
+                            {{ artical.headline }}
+                        </h2>
+                    </a>
+                    <div style="margin-bottom: 10px">
+                        <i class="icon grey small unhide"></i>
+                        <span>{{ artical.views }}</span>
+                        <i class="icon grey heart" style="margin-left: 10px"></i>
+                        <span>{{ artical.favs }}</span>
+                        <span style="margin-left: 20px">{{ artical.createtime }}</span>
+                    </div>
+                    <div class="ui image">
+                            <img src="{{ artical.img }}" alt="">
+                        </div>
+                    <p>
+                        {{ artical.content|truncatechars:300}}
+                        <a href="/detail?id={{ artical.id }}" style="margin-left: 5px">
+                            <i class="angle tiny double grey right icon">READMORE</i>
+                        </a>
+                    </p>
+                    <div class="ui mini tag label" >
+                        {{ artical.tag }}
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+        <!-- 页尾部分如下 -->
+        <div class="ui inverted  vertical very padded  segment">
+            Lance® 独家认证
+        </div>
+    </body>
+</html>

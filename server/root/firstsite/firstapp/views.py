@@ -1,8 +1,7 @@
-from django.shortcuts import render, HttpResponse
-from firstapp.models import People
-from firstapp.models import Article
+from django.shortcuts import render, HttpResponse, redirect
+from firstapp.models import People, Article, Comment
 from django.template import Context, Template
-
+from firstapp.forms import CommentForm
 # Create your views here.
 
 
@@ -42,11 +41,29 @@ def index(request):
     return index_page
 
 
-def detail(request):
+def detail(request, article_id, error_form=None):
     context = {}
-    articalId = request.GET.get('id')
-    artical = Article.objects.filter(id=articalId).first()
-    print (artical)
+    artical = Article.objects.get(id=article_id)
+    best_comment = Comment.objects.filter(best=True, belong_to=artical).first()
+    if best_comment:
+        context['best_comment'] = best_comment
     context['artical'] = artical
-    index_page = render(request, 'detail.html', context)
-    return index_page
+    if error_form is not None:
+        context['form'] = error_form
+    else:
+        context['form'] = CommentForm
+    return render(request, 'detail.html', context)
+
+
+def detail_comment(request, article_id):
+    form = CommentForm(request.POST)
+    artical = Article.objects.get(id=article_id)
+    if form.is_valid():
+        name = form.cleaned_data["name"]
+        content = form.cleaned_data["content"]
+
+        c = Comment(name=name, content=content, belong_to=artical)
+        c.save()
+    else:
+        return detail(request, article_id, error_form=form)
+    return redirect(to='detail', article_id=article_id)

@@ -77,7 +77,7 @@
         <div class="ui  vertical segment">
             {% for artical in article_list %}
                 <div class="ui container vertical segment">
-                    <a href="/detail?id={{ artical.id }}">
+                    <a href="/detail/{{ artical.id }}">
                         <h2 class="ui header" style="margin-bottom: 10px">
                             {{ artical.headline }}
                         </h2>
@@ -94,7 +94,7 @@
                         </div>
                     <p>
                         {{ artical.content|truncatechars:300}}
-                        <a href="/detail?id={{ artical.id }}" style="margin-left: 5px">
+                        <a href="/detail/{{ artical.id }}" style="margin-left: 5px">
                             <i class="angle tiny double grey right icon">READMORE</i>
                         </a>
                     </p>

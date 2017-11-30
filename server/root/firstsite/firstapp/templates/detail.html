@@ -27,33 +27,76 @@
             {{ artical.tag }}
         </div>
     </div>
-    <div class="ui basic very padded borderless container segment">
+    <div class="ui basic very padded borderless container segment" style="padding-top: 0">
         <div class="ui minimal comments">
-          <h3 class="ui dividing header">评论</h3>
+            {% if best_comment %}
+                <div class="ui mini left red ribbon label">
+                    <i class="icon fire"></i><span>最佳评论</span>
+                </div>
+                <div class="best comment">
+                        <a class="avatar">
+                          <img src={{ best_comment.avatar }}>
+                        </a>
+                        <div class="content">
+                          <a class="author">{{ best_comment.name }}</a>
+                          <div class="metadata">
+                            <span class="date">{{ best_comment.createtime }}</span>
+                          </div>
+                          <div class="text">{{ best_comment.content }}</div>
+                          <div class="actions">
+                            <a class="reply">Reply</a>
+                          </div>
+                        </div>
+                    </div>
+            {% endif %}
+{#            <h3 class="ui dividing header" style="border: none;margin-bottom: 0">评论</h3>#}
+            {% if artical.article_comments.count > 0 %}
+                <div class="ui mini left blue ribbon label" style="margin-top: 30px">
+                    <i class="icon fire"></i><span>其他评论</span>
+                </div>
+                {% for comment in artical.article_comments.all %}
+                <div class="comment" style="margin-bottom: 15px">
+                    <a class="avatar">
+                      <img src={{ comment.avatar }}>
+                    </a>
+                    <div class="content">
+                      <a class="author">{{ comment.name }}</a>
+                      <div class="metadata">
+                        <span class="date">{{ comment.createtime }}</span>
+                      </div>
+                      <div class="text">{{ comment.content }}</div>
+                      <div class="actions">
+                        <a class="reply">Reply</a>
+                      </div>
+                    </div>
+                </div>
+            {% endfor %}
+            {% endif %}
 
-          <div class="comment">
-            <a class="avatar">
-              <img src="/images/avatar/small/matt.jpg">
-            </a>
-            <div class="content">
-              <a class="author">Matt</a>
-              <div class="metadata">
-                <span class="date">今天下午 5:42</span>
-              </div>
-              <div class="text">太赞了！ </div>
-              <div class="actions">
-                <a class="reply">Reply</a>
-              </div>
-            </div>
-          </div>
-
-          <form class="ui reply form">
-            <div class="field">
-              <textarea></textarea>
-            </div>
-            <div class="ui blue labeled submit icon button"><i class="icon edit"></i> Add Reply </div>
-          </form>
         </div>
+
+        <form class="ui error reply form" method="post" action="{% url 'comment' artical.id %}">
+            {% if form.errors %}
+                <div class="ui error message">
+                        {{ form.errors }}
+                </div>
+                {% for field in form %}
+                    <div class="{{ field.errors|yesno:'error, '}} field">
+                        {{ field.label }}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                {% for field in form %}
+                    <div class="field">
+                        {{ field.lable }}
+                        {{ field }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            {% csrf_token %}
+            <button type="submit" class="ui blue button">评论</button>
+        </form>
     </div>
 </body>
 </html>

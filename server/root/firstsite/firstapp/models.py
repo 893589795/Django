@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -23,7 +22,7 @@ class Article(models.Model):
     # 点赞量(favs)
     favs = models.IntegerField(null=True, blank=True)
     # 创建日期(createtime)
-    createtime = models.DateField(null=False, blank=False, auto_now=True)
+    createtime = models.DateField(auto_now=True)
     # 标签
     TAG_CHOICES = (
         ('life', 'life'),
@@ -33,3 +32,15 @@ class Article(models.Model):
 
     def __str__(self):
         return self.headline
+
+
+class Comment(models.Model):
+    name = models.CharField(max_length=10)
+    avatar = models.CharField(max_length=100, default="static/images/default.png")
+    content = models.TextField()
+    createtime = models.DateField(auto_now=True)
+    belong_to = models.ForeignKey(to=Article, related_name="article_comments", null=True, blank=True)
+    best = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.content

@@ -52,6 +52,7 @@ def detail(request, article_id, error_form=None):
         context['form'] = error_form
     else:
         context['form'] = CommentForm
+
     return render(request, 'detail.html', context)
 
 

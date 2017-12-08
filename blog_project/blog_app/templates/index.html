@@ -1,0 +1,131 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="{% static 'css/semantic.css' %}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{% static  'css/list_custom.css' %}" media="screen" title="no title" charset="utf-8">
+
+</head>
+
+<body>
+    <div class="ui inverted top fixed menu borderless red menu">
+        <div class="header item">
+            <div class="ui image">
+                <a href="?page=1"><img src="{% static 'images/tenlogo.png' %}" alt=""></a>
+
+            </div>
+        </div>
+
+        <div class="right menu">
+            {% if request.user.is_authenticated %}
+                <div class="item">
+                <h5 class="ui inverted header">
+                    <div class="ui avatar image">
+                        <img src="{% static 'images/default.png' %}" alt="">
+                    </div>
+
+                    <span>{{ request.user.username }}</span>
+                </h5>
+                </div>
+                <div class="item">
+                    <a href="{% url 'logout' %}" class="ui inverted circular button">Logout</a>
+                </div>
+            {% else %}
+{#                <div class="item">#}
+{#                <h5 class="ui inverted header">#}
+{#                    <div class="ui avatar image">#}
+{#                        <img src="{% static 'images/default.png' %}" alt="">#}
+{#                    </div>#}
+{##}
+{#                    <span>admin</span>#}
+{#                </h5>#}
+{#                </div>#}
+                <div class="item">
+                    <a href="{% url 'login' %}" class="ui inverted circular button">Signup/Login</a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="ui inverted segment container nav">
+        <div class="ui  three borderless  item  menu">
+            <a class="item">
+                        All
+                    </a>
+            <a class="item">
+                        New
+                    </a>
+
+
+            <a class="active item" href="#list/editors">
+                        Editor's
+                    </a>
+
+
+
+        </div>
+    </div>
+
+
+    <div class="ui basic segment container content">
+
+        <div class="ui three column grid">
+            {% for video in video_list %}
+                <div class="column">
+                <a class="ui fluid card" href="#">
+                    <div class="image">
+                        {% if video.cover %}
+                           <img src="/cover_image/{{ video.cover }}"  alt="" style="height:200px;object-fit: cover;">
+                        {% else %}
+                            <img src={{ video.url_image }} alt="" style="height:200px;object-fit: cover;">
+                        {% endif %}
+                    </div>
+                </a>
+
+                <div class="title header" href="#">{{ video.title|truncatechars:40 }}</div>
+
+                <i class="icon grey unhide"></i>
+                <span style="color:#bbbbbb">{{ video.readers }}K</span>
+
+                <span class="" style="color:rgb(226, 226, 226)">|</span>
+
+                <i class="icon grey checkmark"></i>
+                <span style="color:#bbbbbb"> {{ video.likes }} people got it</span>
+
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+    <div class="ui center aligned very padded vertical segment container">
+        <div class="ui pagination menu">
+            {% if video_list.has_previous %}
+                <a href="?page={{ video_list.previous_page_number }}" class="item">
+                    <i class="icon red left arrow"></i>
+                 </a>
+            {% else %}
+                <a href="?page={{ video_list.start_index }}" class="item">
+                    <i class="icon grey left arrow"></i>
+                 </a>
+            {% endif %}
+
+            {% if video_list.has_next %}
+                <a href="?page={{ video_list.next_page_number }}" class="item">
+                    <i class="icon red right arrow"></i>
+                </a>
+            {% else %}
+                <a href="?page={{ video_list.end_index }}" class="item">
+                    <i class="icon grey right arrow"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

@@ -38,7 +38,7 @@ class Comment(models.Model):
     name = models.CharField(max_length=10)
     avatar = models.CharField(max_length=100, default="static/images/default.png")
     content = models.TextField()
-    createtime = models.DateField(auto_now=True)
+    createTime = models.DateField(auto_now=True)
     belong_to = models.ForeignKey(to=Article, related_name="article_comments", null=True, blank=True)
     best = models.BooleanField(default=False)
 

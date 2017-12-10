@@ -28,14 +28,19 @@
                 <a href="{% url 'myInfo' request.user.id %}">
                     <div class="item">
                         <h5 class="ui inverted header">
-                            <div class="ui mini circular image" style="height: 35px;margin-right: 5px">
+                            <div class="ui mini circular image" style="margin-right: 5px">
                                 {% if request.user.user_profile.first.avatar %}
-                                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" />
+                                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" style="width: 35px;height: 35px;object-fit: cover"/>
                                 {% else %}
                                     <img src="{% static 'images/default.png' %}" alt="" />
                                 {% endif %}
                             </div>
-                            <span>{{ request.user.user_profile.first.nickname }}</span>
+                            {% if request.user.user_profile.first.nickname %}
+                                <span>{{ request.user.user_profile.first.nickname }}</span>
+                            {% else %}
+                                <span>{{ request.user.username }}</span>
+                            {% endif %}
+
                         </h5>
                     </div>
                 </a>
@@ -53,9 +58,19 @@
     </div>
     <div class="ui inverted segment container nav">
         <div class="ui  three borderless  item  menu">
-            <a class="active item"> All </a>
-            <a class="item"> New </a>
-            <a class="item" href=""> Editor's </a>
+            {% if tag == 'new' %}
+                <a class="item" href="/index" > All </a>
+                <a class="active item" href="/index?tag=new"> New </a>
+                <a class="item" href="/index?tag=editor"> Editor's </a>
+            {% elif tag == 'editor' %}
+                <a class="item" href="/index" > All </a>
+                <a class="item" href="/index?tag=new"> New </a>
+                <a class="active item" href="/index?tag=editor"> Editor's </a>
+            {% else %}
+                <a class="active item" href="/index" > All </a>
+                <a class="item" href="/index?tag=new"> New </a>
+                <a class="item" href="/index?tag=editor"> Editor's </a>
+            {% endif %}
         </div>
     </div>
 
@@ -71,7 +86,7 @@
                     </div>
                 </a>
 
-                <div class="title header" href="#">{{ article.title|truncatechars:25 }}</div>
+                <div class="title header" href="#"><p>{{ article.title|truncatechars:25 }}</p></div>
 
                 <i class="icon grey unhide"></i>
                 <span style="color:#bbbbbb">{{ article.views }}</span>
@@ -90,39 +105,75 @@
 
     <div class="ui center aligned very padded vertical segment container">
         <div class="ui pagination menu">
-            {% if article_list.has_previous %}
-                <a href="?page={{ article_list.previous_page_number }}" class="item">
-                    <i class="icon red left caret"></i>
-                </a>
-            {% else %}
-                <a href="?page={{ article_list.start_index }}" class="disabled item">
-                    <i class="icon  left caret"></i>
-                </a>
-            {% endif %}
-
-            {% for page_number in article_list.paginator.page_range %}
-                {% ifequal page_number  article_list.number %}
-                    <a href="?page={{ page_number }}" class="active item" style="background-color: red; color:white">
-                        {{ page_number }}
+            {% if tag %}
+                {% if article_list.has_previous %}
+                    <a href="?tag={{ tag }}&page={{ article_list.previous_page_number }}" class="item">
+                        <i class="icon red left caret"></i>
                     </a>
                 {% else %}
-                    <a href="?page={{ page_number }}" class=" item">
-                        {{ page_number }}
+                    <a href="?tag={{ tag }}&page={{ article_list.start_index }}" class="disabled item">
+                        <i class="icon  left caret"></i>
                     </a>
-                {% endifequal %}
-            {% endfor %}
+                {% endif %}
 
-            {% if  article_list.has_next %}
-                <a href="?page={{ article_list.next_page_number }}" class="item">
-                    <i class="icon red right caret"></i>
-                </a>
+                {% for page_number in article_list.paginator.page_range %}
+                    {% ifequal page_number  article_list.number %}
+                        <a href="?tag={{ tag }}&page={{ page_number }}" class="active item" style="background-color: red; color:white">
+                            {{ page_number }}
+                        </a>
+                    {% else %}
+                        <a href="?tag={{ tag }}&page={{ page_number }}" class=" item">
+                            {{ page_number }}
+                        </a>
+                    {% endifequal %}
+                {% endfor %}
+
+                {% if  article_list.has_next %}
+                    <a href="?tag={{ tag }}&page={{ article_list.next_page_number }}" class="item">
+                        <i class="icon red right caret"></i>
+                    </a>
+                {% else %}
+                    <a href="?tag={{ tag }}&page={{ article_list.paginator.num_pages }}" class="disabled item">
+                        <i class="icon  right caret"></i>
+                    </a>
+                {% endif %}
             {% else %}
-                <a href="?page={{ article_list.paginator.num_pages }}" class="disabled item">
-                    <i class="icon  right caret"></i>
-                </a>
+                {% if article_list.has_previous %}
+                    <a href="?page={{ article_list.previous_page_number }}" class="item">
+                        <i class="icon red left caret"></i>
+                    </a>
+                {% else %}
+                    <a href="?page={{ article_list.start_index }}" class="disabled item">
+                        <i class="icon  left caret"></i>
+                    </a>
+                {% endif %}
+
+                {% for page_number in article_list.paginator.page_range %}
+                    {% ifequal page_number  article_list.number %}
+                        <a href="?page={{ page_number }}" class="active item" style="background-color: red; color:white">
+                            {{ page_number }}
+                        </a>
+                    {% else %}
+                        <a href="?page={{ page_number }}" class=" item">
+                            {{ page_number }}
+                        </a>
+                    {% endifequal %}
+                {% endfor %}
+
+                {% if  article_list.has_next %}
+                    <a href="?page={{ article_list.next_page_number }}" class="item">
+                        <i class="icon red right caret"></i>
+                    </a>
+                {% else %}
+                    <a href="?page={{ article_list.paginator.num_pages }}" class="disabled item">
+                        <i class="icon  right caret"></i>
+                    </a>
+                {% endif %}
             {% endif %}
+
         </div>
     </div>
 </body>
+
 
 </html>

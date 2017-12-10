@@ -16,9 +16,12 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 def index(request):
-    article_list = Article.objects.all()
-
-    page_robot = Paginator(article_list, 6)
+    request_type = request.GET.get('tag')
+    if request.GET.get('tag'):
+        article_list = Article.objects.filter(tag=request_type)
+    else:
+        article_list = Article.objects.all()
+    page_robot = Paginator(article_list, 3)
     page_num = request.GET.get('page')
     try:
         article_list = page_robot.page(page_num)
@@ -29,7 +32,7 @@ def index(request):
         
     context = {}
     context["article_list"] = article_list
-
+    context["tag"] = request_type
     return render(request, 'index.html', context)
 
 def detail(request, id):
@@ -119,13 +122,21 @@ def editInfo(request, id):
             name = form.cleaned_data["name"]
             sex = request.POST["sex"]
             user = User.objects.get(id=id)
-            if request.FILES:
-                avatar = request.FILES['avatar']
-            if UserProfile.objects.filter(belong_to=user):
-                profiles = UserProfile.objects.filter(belong_to=user)
-                profiles.delete()
-            profile = UserProfile(nickname=name, sex=sex, avatar=avatar, belong_to=user)
-            profile.save()
+            if UserProfile.objects.get(belong_to__username=user.username):
+                profile = UserProfile.objects.get(belong_to__username=user.username)
+                if name != '':
+                    profile.nickname = name
+                profile.sex = sex
+                if request.FILES:
+                    profile.avatar = request.FILES['avatar']
+                profile.save()
+            else:
+                if request.FILES:
+                    avatar = request.FILES['avatar']
+                    profile = UserProfile(nickname=name, sex=sex, avatar=avatar, belong_to=user)
+                else:
+                    profile = UserProfile(nickname=name, sex=sex, belong_to=user)
+                profile.save()
     return redirect(to="myInfo", id=id)
 
 
@@ -140,7 +151,7 @@ def myinfo(request, id):
 def mycollection(request):
     context = {}
     collections = Article.objects.filter(article_tickets__choice='like', article_tickets__voter=request.user)
-    page_robot = Paginator(collections, 1)
+    page_robot = Paginator(collections, 3)
     page_num = request.GET.get('page')
     try:
         collections = page_robot.page(page_num)

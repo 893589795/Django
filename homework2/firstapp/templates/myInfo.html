@@ -23,14 +23,18 @@
                 <a href="{% url 'myInfo' request.user.id %}">
                     <div class="item">
                         <h5 class="ui inverted header">
-                            <div class="ui mini circular image" style="height: 35px;margin-right: 5px">
+                            <div class="ui mini circular image" style="margin-right: 5px">
                                 {% if request.user.user_profile.first.avatar %}
-                                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" />
+                                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" style="width: 35px;height: 35px;object-fit: cover"/>
                                 {% else %}
                                     <img src="{% static 'images/default.png' %}" alt="" />
                                 {% endif %}
                             </div>
-                            <span>{{ request.user.user_profile.first.nickname }}</span>
+                            {% if request.user.user_profile.first.nickname %}
+                                <span>{{ request.user.user_profile.first.nickname }}</span>
+                            {% else %}
+                                <span>{{ request.user.username }}</span>
+                            {% endif %}
                         </h5>
                     </div>
                 </a>
@@ -42,7 +46,7 @@
         <div class="ui  raised container segments">
             <div class="ui head basic segment" style="background-image: url('images/bg.png');">
                 <div class="ui circular image cover">
-                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" />
+                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" style="width: 100px;height: 100px;object-fit: cover"/>
                 </div>
             </div>
 

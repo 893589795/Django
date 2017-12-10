@@ -23,14 +23,18 @@
                 <a href="{% url 'myInfo' request.user.id %}">
                     <div class="item">
                         <h5 class="ui inverted header">
-                            <div class="ui mini circular image" style="height: 35px;margin-right: 5px">
+                            <div class="ui mini circular image" style="margin-right: 5px">
                                 {% if request.user.user_profile.first.avatar %}
-                                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" />
+                                    <img src="/upload/{{ request.user.user_profile.first.avatar }}" alt="" style="width: 35px;height: 35px;object-fit: cover"/>
                                 {% else %}
                                     <img src="{% static 'images/default.png' %}" alt="" />
                                 {% endif %}
                             </div>
-                            <span>{{ request.user.user_profile.first.nickname }}</span>
+                            {% if request.user.user_profile.first.nickname %}
+                                <span>{{ request.user.user_profile.first.nickname }}</span>
+                            {% else %}
+                                <span>{{ request.user.username }}</span>
+                            {% endif %}
                         </h5>
                     </div>
                 </a>
@@ -39,7 +43,6 @@
                 </div>
 
             {% else %}
-
                 <div class="item">
                     <a href="{% url 'login' %}" class="ui inverted circular button">Signup/Login</a>
                 </div>
@@ -47,7 +50,7 @@
             </div>
         </div>
 
-        <div class="ui vertical inverted detail segment" style="background-image: url({% static 'images/detail.jpg' %})"></div>
+        <div class="ui vertical inverted detail segment" style="background-image: url({{ article.img }})"></div>
 
         <div class="ui basic segment container" style="width:700px;border:none;box-shadow:none;margin-top:50px;">
             <h1 class="ui header">{{ article.title }}</h1>
@@ -56,7 +59,6 @@
             <span class="" style="color:rgb(226, 226, 226)">|</span>
             <i class="icon grey checkmark"></i>
             <span style="color:#bbbbbb">{{ article.likes }} people got it</span>
-            
             <p style="font-size: 17px;margin-top: 15px">
                 {{ article.content }}
             </p>

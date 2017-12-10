@@ -24,13 +24,14 @@ class CommentForm(forms.Form):
 
 SEX_CHOICES = {
     ("女", "女"),
-    ("男", "男")
-
+    ("男", "男"),
+    ("--", "--"),
 }
 class EditInfoForm(forms.Form):
     name = forms.CharField(max_length=10, required=False)
     sex = forms.ChoiceField(
         choices=SEX_CHOICES,
+        initial='--',
         required=False
     )
     avatar = forms.ImageField(required=False)

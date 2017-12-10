@@ -11,7 +11,11 @@ class Article(models.Model):
     views = models.IntegerField(default=0)
     likes = models.IntegerField(default=0)
     createtime = models.DateField()
-    
+    TAG_CHOICES = {
+        ("new", "new"),
+        ("editor", "editor")
+    }
+    tag = models.CharField(choices=TAG_CHOICES, max_length=10, default='new')
     def __str__(self):
         return self.title
 
